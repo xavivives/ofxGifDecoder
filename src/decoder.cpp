@@ -188,7 +188,6 @@ namespace ofxGIF
                             
                             case GIF_DISPOSAL_UNSPECIFIED:
                                 break;
-                                
                         }
                     }
                     else
@@ -201,7 +200,9 @@ namespace ofxGIF
         }
 
         pages.push_back(accumPx);
-        frameDurations.push_back(_duration  );
+        if(_duration<=20)
+            _duration = 100;
+        frameDurations.push_back( _duration);
     }
 
 };

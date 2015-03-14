@@ -45,6 +45,7 @@ void ofxGifDecoder::createGif(ofxGifType *currentGif, string filePath)
 {
     ofxGIF::fiGifLoader decoder;
     decoder.load(gifPath);
+    int duration = 0;
     
         int length =decoder.pages.size();
         if(length>0)
@@ -52,14 +53,14 @@ void ofxGifDecoder::createGif(ofxGifType *currentGif, string filePath)
             currentGif->length = length;
             currentGif->frames.resize(length);
             currentGif->delays.resize(length);
-            currentGif->aspectRatio = 1;
-            
+
             for(int i=0; i < decoder.pages.size() ; i++)
             {
                 currentGif->frames[i] = decoder.pages[i];
                 currentGif->delays[i] = decoder.frameDurations[i];
+                duration += decoder.frameDurations[i];
             }
-
+            currentGif->duration = duration;
             currentGif->width = currentGif->frames[0].getWidth();
             currentGif->height = currentGif->frames[0].getHeight();
             currentGif->status = "ok";
@@ -71,7 +72,7 @@ void ofxGifDecoder::createGif(ofxGifType *currentGif, string filePath)
             currentGif->length = 0;
             currentGif->frames.resize(0);
             currentGif->delays.resize(0);
-            currentGif->aspectRatio = 1;
+            currentGif->duration = duration;
             currentGif->width = 0;
             currentGif->height = 0;
         }
